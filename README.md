@@ -192,7 +192,7 @@ function showResult() {
         });
     }
 
-    app.innerHTML = "<h2>🎉 Твои рекомендации:</h2>";
+    app.innerHTML = "<h2> Твои рекомендации:</h2>";
 
     results.forEach(r => {
         app.innerHTML += `

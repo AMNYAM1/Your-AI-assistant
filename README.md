@@ -1,3 +1,4 @@
+```html
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -47,7 +48,6 @@ button:hover {
     transform: scale(1.03);
 }
 
-/* РЕЗУЛЬТАТЫ без анимации */
 .result-card {
     background: #f3f0ff;
     margin: 15px auto;
@@ -74,7 +74,6 @@ button:hover {
     }
 }
 
-/* ПРОГРЕСС */
 .progress-container {
     background: #e0e0e0;
     border-radius: 12px;
@@ -103,44 +102,6 @@ button:hover {
     </div>
     <p id="question"></p>
     <div id="answers"></div>
-</div>
-
-<!-- КЛАССИФИКАЦИЯ -->
-<div class="card">
-    <h2>Классификация ИИ</h2>
-    <div class="section">
-        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png">
-        <p><b>Большие языковые модели (LLM)</b> — обработка и генерация текста.</p>
-    </div>
-    <div class="section">
-        <img src="https://cdn-icons-png.flaticon.com/512/2910/2910768.png">
-        <p><b>Диффузионные модели</b> — генерация изображений.</p>
-    </div>
-    <div class="section">
-        <img src="https://cdn-icons-png.flaticon.com/512/2721/2721293.png">
-        <p><b>Кодовые модели</b> — генерация и анализ программного кода.</p>
-    </div>
-    <div class="section">
-        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
-        <p><b>Мультимодальные модели</b> — работают с текстом, изображениями и др.</p>
-    </div>
-</div>
-
-<!-- РАЗРАБОТЧИКИ -->
-<div class="card">
-    <h2>Разработчики ИИ</h2>
-    <div class="section">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg">
-        <p><b>OpenAI</b> — ChatGPT, DALL·E</p>
-    </div>
-    <div class="section">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg">
-        <p><b>Microsoft</b> — Copilot, Azure AI</p>
-    </div>
-    <div class="section">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Meta-Logo.png">
-        <p><b>Meta</b> — открытые модели (LLaMA)</p>
-    </div>
 </div>
 
 </div>
@@ -182,12 +143,21 @@ function showQuestion() {
     const answersDiv = document.getElementById("answers");
     answersDiv.innerHTML = "";
 
+    // Кнопки ответов
     q.a.forEach(option => {
         const btn = document.createElement("button");
         btn.innerText = option.text;
         btn.onclick = () => next(option.value);
         answersDiv.appendChild(btn);
     });
+
+    // Кнопка назад
+    if (step > 0) {
+        const backBtn = document.createElement("button");
+        backBtn.innerText = "← Назад";
+        backBtn.onclick = prev;
+        answersDiv.appendChild(backBtn);
+    }
 
     updateProgress();
 }
@@ -203,24 +173,64 @@ function next(value) {
     }
 }
 
+function prev() {
+    if (step > 0) {
+        step--;
+        showQuestion();
+    }
+}
+
 function updateProgress() {
     const progress = document.getElementById("progress");
-    progress.style.width = ((step) / questions.length * 100) + "%";
+    progress.style.width = ((step + 1) / questions.length * 100) + "%";
 }
 
 function showResult() {
     const app = document.getElementById("app");
+
+    let tools = {
+        ChatGPT: 0,
+        Claude: 0,
+        Midjourney: 0,
+        "DALL·E": 0,
+        "GitHub Copilot": 0,
+        Gamma: 0
+    };
+
+    // Баллы прибавляем
+    if (answers.q0 === "text") {
+        tools.ChatGPT += 2;
+        tools.Claude += 2;
+    }
+
+    if (answers.q1 === "study") tools.ChatGPT += 2;
+    if (answers.q1 === "work") tools["GitHub Copilot"] += 2;
+
+    if (answers.q2 === "beginner") tools.ChatGPT += 2;
+    if (answers.q2 === "pro") tools.Claude += 2;
+
+    if (answers.q0 === "image") {
+        tools.Midjourney += 2;
+        tools["DALL·E"] += 2;
+    }
+
+    if (answers.q0 === "code") tools["GitHub Copilot"] += 3;
+    if (answers.q0 === "slides") tools.Gamma += 3;
+
+    if (answers.q3 === "free") tools.ChatGPT += 1;
+
+    // Сортировка
+    const sorted = Object.entries(tools)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3);
+
     let html = "<h2>Рекомендации:</h2>";
 
-    if(answers.q0 === "text") {
-        if(answers.q1 === "study") html += `<div class="result-card"><b>ChatGPT</b><br>Для учебных текстов и эссе</div>`;
-        else html += `<div class="result-card"><b>Claude</b><br>Хорош для длинных текстов</div>`;
-    }
-    if(answers.q0 === "image") html += `<div class="result-card"><b>Midjourney</b><br>Художественный стиль</div><div class="result-card"><b>DALL·E</b><br>Генерация по описанию</div>`;
-    if(answers.q0 === "code") html += `<div class="result-card"><b>GitHub Copilot</b><br>Помощь в коде</div>`;
-    if(answers.q0 === "slides") html += `<div class="result-card"><b>Gamma</b><br>Презентации</div>`;
+    sorted.forEach(([tool, score]) => {
+        html += `<div class="result-card"><b>${tool}</b><br>Рейтинг: ${score}</div>`;
+    });
 
-    if(answers.q3 === "free") html += `<div class="result-card"><b>Бесплатные версии</b><br>Подходят для пробного использования</div>`;
+    html += `<button onclick="location.reload()">Начать заново</button>`;
 
     app.innerHTML = html;
 }

@@ -105,6 +105,45 @@ button:hover {
 </div>
 
 </div>
+<!-- КЛАССИФИКАЦИЯ -->
+<div class="card">
+    <h2>Классификация ИИ</h2>
+    <div class="section">
+        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png">
+        <p><b>Большие языковые модели (LLM)</b> — обработка и генерация текста.</p>
+    </div>
+    <div class="section">
+        <img src="https://cdn-icons-png.flaticon.com/512/2910/2910768.png">
+        <p><b>Диффузионные модели</b> — генерация изображений.</p>
+    </div>
+    <div class="section">
+        <img src="https://cdn-icons-png.flaticon.com/512/2721/2721293.png">
+        <p><b>Кодовые модели</b> — генерация и анализ программного кода.</p>
+    </div>
+    <div class="section">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
+        <p><b>Мультимодальные модели</b> — работают с текстом, изображениями и др.</p>
+    </div>
+</div>
+
+<!-- РАЗРАБОТЧИКИ -->
+<div class="card">
+    <h2>Разработчики ИИ</h2>
+    <div class="section">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg">
+        <p><b>OpenAI</b> — ChatGPT, DALL·E</p>
+    </div>
+    <div class="section">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg">
+        <p><b>Microsoft</b> — Copilot, Azure AI</p>
+    </div>
+    <div class="section">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Meta-Logo.png">
+        <p><b>Meta</b> — открытые модели (LLaMA)</p>
+    </div>
+</div>
+
+</div>
 
 <script>
 const questions = [

@@ -214,7 +214,7 @@ function next(value) {
 function showResult() {
     const app = document.getElementById("app");
 
-    let html = "<h2>🎉 Рекомендации:</h2>";
+    let html = "<h2> Рекомендации:</h2>";
 
     if (answers.q0 === "text") {
         html += `<div class="result-card"><b>ChatGPT</b><br>Универсальная LLM</div>`;

@@ -142,8 +142,6 @@ button:hover {
     </div>
 </div>
 
-</div>
-
 <script>
 const questions = [
     {q: "Что ты хочешь создавать?", a:[

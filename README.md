@@ -1,146 +1,216 @@
+<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
 <title>Выбери свою нейросеть</title>
+
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #1e1e2f, #3a3a6a);
-        color: white;
-        text-align: center;
-        padding: 20px;
-    }
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #f7e8ff, #e0f7fa);
+    color: #333;
+}
 
-    .container {
-        max-width: 700px;
-        margin: auto;
-        background: rgba(255,255,255,0.1);
-        padding: 20px;
-        border-radius: 15px;
-        backdrop-filter: blur(10px);
-    }
+.container {
+    max-width: 700px;
+    margin: 60px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: 0.5s;
+}
 
-    button {
-        margin: 10px;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        background: #6c63ff;
-        color: white;
-        font-size: 16px;
-        transition: 0.3s;
-    }
+h1 {
+    margin-bottom: 20px;
+}
 
-    button:hover {
-        background: #8a84ff;
-    }
+button {
+    display: block;
+    width: 80%;
+    margin: 10px auto;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    background: #d0c4ff;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
 
-    .hidden {
-        display: none;
-    }
+button:hover {
+    background: #bbaeff;
+    transform: scale(1.03);
+}
 
-    .result {
-        margin-top: 20px;
-        padding: 15px;
-        background: rgba(0,0,0,0.3);
-        border-radius: 10px;
-    }
+.fade {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.5s;
+}
 
-    .other {
-        margin-top: 20px;
-        font-size: 14px;
-        opacity: 0.8;
-    }
+.fade.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.result-card {
+    background: #f3f0ff;
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.small {
+    font-size: 14px;
+    opacity: 0.7;
+}
 </style>
+
 </head>
 <body>
 
-<div class="container">
-    <h1>🤖 Какая нейросеть тебе подходит?</h1>
-
-    <div id="quiz">
-        <p id="question">Что ты хочешь делать?</p>
-
-        <div id="answers">
-            <button onclick="answer('text')">Писать тексты</button>
-            <button onclick="answer('image')">Создавать картинки</button>
-            <button onclick="answer('code')">Программировать</button>
-        </div>
-    </div>
-
-    <div id="result" class="result hidden"></div>
-    <div id="other" class="other hidden"></div>
+<div class="container fade show" id="app">
+    <h1>🤖 Подбор нейросети</h1>
+    <p id="question"></p>
+    <div id="answers"></div>
 </div>
 
 <script>
-let step = 1;
-let userChoice = {};
+const questions = [
+    {
+        q: "Что ты хочешь делать?",
+        a: [
+            {text: "Писать тексты", value: "text"},
+            {text: "Создавать картинки", value: "image"},
+            {text: "Программировать", value: "code"},
+            {text: "Делать презентации", value: "slides"}
+        ]
+    },
+    {
+        q: "Для чего тебе это нужно?",
+        a: [
+            {text: "Учёба", value: "study"},
+            {text: "Работа", value: "work"},
+            {text: "Развлечение", value: "fun"}
+        ]
+    },
+    {
+        q: "Насколько ты опытен?",
+        a: [
+            {text: "Новичок", value: "beginner"},
+            {text: "Средний уровень", value: "middle"},
+            {text: "Продвинутый", value: "pro"}
+        ]
+    },
+    {
+        q: "Важно ли, чтобы сервис был бесплатным?",
+        a: [
+            {text: "Да", value: "free"},
+            {text: "Не важно", value: "any"}
+        ]
+    }
+];
 
-function answer(choice) {
-    if (step === 1) {
-        userChoice.type = choice;
-        step++;
-        nextQuestion();
-    } else if (step === 2) {
-        userChoice.goal = choice;
+let step = 0;
+let answers = {};
+
+function showQuestion() {
+    const app = document.getElementById("app");
+    app.classList.remove("show");
+
+    setTimeout(() => {
+        const q = questions[step];
+        document.getElementById("question").innerText = q.q;
+
+        const answersDiv = document.getElementById("answers");
+        answersDiv.innerHTML = "";
+
+        q.a.forEach(option => {
+            const btn = document.createElement("button");
+            btn.innerText = option.text;
+            btn.onclick = () => next(option.value);
+            answersDiv.appendChild(btn);
+        });
+
+        app.classList.add("show");
+    }, 300);
+}
+
+function next(value) {
+    answers["q" + step] = value;
+    step++;
+
+    if (step < questions.length) {
+        showQuestion();
+    } else {
         showResult();
     }
 }
 
-function nextQuestion() {
-    const q = document.getElementById("question");
-    const a = document.getElementById("answers");
-
-    q.innerText = "Для чего тебе это нужно?";
-    a.innerHTML = `
-        <button onclick="answer('study')">Учёба</button>
-        <button onclick="answer('work')">Работа</button>
-        <button onclick="answer('fun')">Развлечение</button>
-    `;
-}
-
 function showResult() {
-    document.getElementById("quiz").classList.add("hidden");
+    const app = document.getElementById("app");
 
-    const result = document.getElementById("result");
-    const other = document.getElementById("other");
+    let results = [];
 
-    let recommendation = "";
-    let description = "";
-    let othersText = "";
-
-    if (userChoice.type === "text") {
-        recommendation = "ChatGPT";
-        description = "Отлично подходит для написания текстов, эссе, ответов и идей.";
-
-        othersText = "Другие варианты: Jasper (маркетинг), Copy.ai (копирайтинг)";
+    if (answers.q0 === "text") {
+        results.push({
+            name: "ChatGPT",
+            desc: "Лучше всего для текстов, учёбы и общения"
+        });
+        results.push({
+            name: "Jasper",
+            desc: "Подходит для маркетинга и копирайтинга"
+        });
     }
 
-    if (userChoice.type === "image") {
-        recommendation = "Midjourney";
-        description = "Создаёт красивые изображения по описанию.";
-
-        othersText = "Другие варианты: DALL·E, Stable Diffusion";
+    if (answers.q0 === "image") {
+        results.push({
+            name: "Midjourney",
+            desc: "Очень красивые и художественные изображения"
+        });
+        results.push({
+            name: "DALL·E",
+            desc: "Генерация изображений по описанию"
+        });
     }
 
-    if (userChoice.type === "code") {
-        recommendation = "GitHub Copilot";
-        description = "Помогает писать код и ускоряет разработку.";
-
-        othersText = "Другие варианты: Codeium, Tabnine";
+    if (answers.q0 === "code") {
+        results.push({
+            name: "GitHub Copilot",
+            desc: "Помогает писать код быстрее"
+        });
     }
 
-    result.classList.remove("hidden");
-    other.classList.remove("hidden");
+    if (answers.q0 === "slides") {
+        results.push({
+            name: "Gamma",
+            desc: "Создаёт презентации автоматически"
+        });
+    }
 
-    result.innerHTML = `
-        <h2>Тебе подходит: ${recommendation}</h2>
-        <p>${description}</p>
+    app.innerHTML = "<h2>🎉 Твои рекомендации:</h2>";
+
+    results.forEach(r => {
+        app.innerHTML += `
+            <div class="result-card">
+                <h3>${r.name}</h3>
+                <p>${r.desc}</p>
+            </div>
+        `;
+    });
+
+    app.innerHTML += `
+        <p class="small">
+        💡 Попробуй разные нейросети — у каждой свои сильные стороны!
+        </p>
     `;
-
-    other.innerText = othersText;
 }
+
+showQuestion();
 </script>
 
 </body>

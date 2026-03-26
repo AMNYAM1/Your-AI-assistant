@@ -26,7 +26,7 @@ body {
     text-align: center;
 }
 
-h1 {
+h1, h2 {
     text-align: center;
 }
 
@@ -49,9 +49,18 @@ button:hover {
 
 .result-card {
     background: #f3f0ff;
-    margin-top: 15px;
+    margin: 15px auto;
     padding: 15px;
     border-radius: 12px;
+    max-width: 90%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.result-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    background: #e2ddff;
 }
 
 .fade {
@@ -82,6 +91,41 @@ button:hover {
         flex-direction: column;
     }
 }
+
+/* ПРОГРЕСС */
+.progress-container {
+    background: #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 20px auto;
+    height: 20px;
+    width: 80%;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0;
+    background: #bbaeff;
+    transition: width 0.5s ease;
+}
+
+/* Динамичный блок ИИ */
+#timeline {
+    text-align: center;
+    margin-top: 30px;
+}
+
+#timeline button, #timeline input[type=range] {
+    margin: 8px 5px;
+}
+
+#timeline-output {
+    margin-top: 15px;
+    padding: 12px;
+    background: #f0f4ff;
+    border-radius: 12px;
+    min-height: 50px;
+}
 </style>
 </head>
 <body>
@@ -90,6 +134,9 @@ button:hover {
 
 <div class="card fade show" id="app">
     <h1>Твой ИИ-ассистент</h1>
+    <div class="progress-container">
+        <div class="progress-bar" id="progress"></div>
+    </div>
     <p id="question"></p>
     <div id="answers"></div>
 </div>
@@ -97,22 +144,18 @@ button:hover {
 <!-- КЛАССИФИКАЦИЯ -->
 <div class="card fade">
     <h2>Классификация ИИ</h2>
-
     <div class="section">
         <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png">
         <p><b>Большие языковые модели (LLM)</b> — обработка и генерация текста.</p>
     </div>
-
     <div class="section">
         <img src="https://cdn-icons-png.flaticon.com/512/2721/2721293.png">
         <p><b>Диффузионные модели</b> — генерация изображений.</p>
     </div>
-
     <div class="section">
         <img src="https://cdn-icons-png.flaticon.com/512/2721/2721293.png">
         <p><b>Кодовые модели</b> — генерация и анализ программного кода.</p>
     </div>
-
     <div class="section">
         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
         <p><b>Мультимодальные модели</b> — работают с текстом, изображениями и др.</p>
@@ -122,66 +165,58 @@ button:hover {
 <!-- РАЗРАБОТЧИКИ -->
 <div class="card fade">
     <h2>Разработчики ИИ</h2>
-
     <div class="section">
         <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg">
         <p><b>OpenAI</b> — ChatGPT, DALL·E</p>
     </div>
-
     <div class="section">
         <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg">
         <p><b>Microsoft</b> — Copilot, Azure AI</p>
     </div>
-
     <div class="section">
         <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Meta-Logo.png">
         <p><b>Meta</b> — открытые модели (LLaMA)</p>
     </div>
+</div>
 
+<!-- ДИНАМИЧНЫЙ БЛОК -->
+<div class="card fade">
+    <h2>Эволюция ИИ</h2>
+    <div id="timeline">
+        <label for="year">Выбери год:</label>
+        <input type="range" id="year" min="1950" max="2025" step="5" value="2000">
+        <div id="timeline-output">Информация появится здесь</div>
+        <button onclick="showTimeline()">Показать прогресс</button>
+    </div>
 </div>
 
 </div>
 
 <script>
 const questions = [
-    {
-        q: "Что ты хочешь создавать?",
-        a: [
-            {text: "Тексты", value: "text"},
-            {text: "Картинки", value: "image"},
-            {text: "Код", value: "code"},
-            {text: "Презентации", value: "slides"}
-        ]
-    },
-    {
-        q: "В какой сфере хочешь использовать?",
-        a: [
-            {text: "Учёба", value: "study"},
-            {text: "Работа", value: "work"},
-            {text: "Развлечение", value: "fun"}
-        ]
-    },
-    {
-        q: "Твой уровень?",
-        a: [
-            {text: "Новичок", value: "beginner"},
-            {text: "Продвинутый", value: "pro"}
-        ]
-    },
-    {
-        q: "Нужен ли бесплатный доступ?",
-        a: [
-            {text: "Да", value: "free"},
-            {text: "Нет", value: "paid"}
-        ]
-    },
-    {
-        q: "Важна ли простота использования?",
-        a: [
-            {text: "Да, максимально просто", value: "easy"},
-            {text: "Не важно", value: "any"}
-        ]
-    }
+    {q: "Что ты хочешь создавать?", a:[
+        {text: "Тексты", value: "text"},
+        {text: "Картинки", value: "image"},
+        {text: "Код", value: "code"},
+        {text: "Презентации", value: "slides"}
+    ]},
+    {q: "В какой сфере хочешь использовать?", a:[
+        {text: "Учёба", value: "study"},
+        {text: "Работа", value: "work"},
+        {text: "Развлечение", value: "fun"}
+    ]},
+    {q: "Твой уровень?", a:[
+        {text: "Новичок", value: "beginner"},
+        {text: "Продвинутый", value: "pro"}
+    ]},
+    {q: "Нужен ли бесплатный доступ?", a:[
+        {text: "Да", value: "free"},
+        {text: "Нет", value: "paid"}
+    ]},
+    {q: "Важна ли простота использования?", a:[
+        {text: "Да, максимально просто", value: "easy"},
+        {text: "Не важно", value: "any"}
+    ]}
 ];
 
 let step = 0;
@@ -200,59 +235,73 @@ function showQuestion() {
         btn.onclick = () => next(option.value);
         answersDiv.appendChild(btn);
     });
+
+    updateProgress();
 }
 
 function next(value) {
     answers["q" + step] = value;
     step++;
 
-    if (step < questions.length) {
+    if(step < questions.length){
         showQuestion();
     } else {
         showResult();
     }
 }
 
+function updateProgress() {
+    const progress = document.getElementById("progress");
+    progress.style.width = ((step) / questions.length * 100) + "%";
+}
+
 function showResult() {
     const app = document.getElementById("app");
-
     let html = "<h2>Рекомендации:</h2>";
 
-    if (answers.q0 === "text") {
-        html += `<div class="result-card"><b>ChatGPT</b><br>Универсальная LLM</div>`;
-        html += `<div class="result-card"><b>Claude</b><br>Хорош для длинных текстов</div>`;
+    // Логика с учетом нескольких факторов
+    if(answers.q0 === "text") {
+        if(answers.q1 === "study") html += `<div class="result-card"><b>ChatGPT</b><br>Для учебных текстов и эссе</div>`;
+        else html += `<div class="result-card"><b>Claude</b><br>Хорош для длинных текстов</div>`;
     }
+    if(answers.q0 === "image") html += `<div class="result-card"><b>Midjourney</b><br>Художественный стиль</div><div class="result-card"><b>DALL·E</b><br>Генерация по описанию</div>`;
+    if(answers.q0 === "code") html += `<div class="result-card"><b>GitHub Copilot</b><br>Помощь в коде</div>`;
+    if(answers.q0 === "slides") html += `<div class="result-card"><b>Gamma</b><br>Презентации</div>`;
 
-    if (answers.q0 === "image") {
-        html += `<div class="result-card"><b>Midjourney</b><br>Художественный стиль</div>`;
-        html += `<div class="result-card"><b>DALL·E</b><br>Генерация по описанию</div>`;
-    }
-
-    if (answers.q0 === "code") {
-        html += `<div class="result-card"><b>GitHub Copilot</b><br>Помощь в коде</div>`;
-    }
-
-    if (answers.q0 === "slides") {
-        html += `<div class="result-card"><b>Gamma</b><br>Презентации</div>`;
-    }
+    // Бесплатные или платные
+    if(answers.q3 === "free") html += `<div class="result-card"><b>Бесплатные версии</b><br>Подходят для пробного использования</div>`;
 
     app.innerHTML = html;
 }
 
-showQuestion();
-
-/* АНИМАЦИЯ */
+/* Анимация появления блоков */
 const faders = document.querySelectorAll('.fade');
-
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add("show");
-        }
+const observer = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+        if(entry.isIntersecting) entry.target.classList.add("show");
     });
 });
+faders.forEach(el=>observer.observe(el));
 
-faders.forEach(el => observer.observe(el));
+showQuestion();
+
+/* ДИНАМИЧНЫЙ ТАЙМЛАЙН */
+const timelineData = {
+    1950: "Искусственный интеллект как концепция впервые предложен.",
+    1965: "Появились первые программы машинного обучения.",
+    1980: "Экспертные системы активно применяются в промышленности.",
+    1997: "Шахматный компьютер Deep Blue побеждает чемпиона мира.",
+    2012: "Революция глубокого обучения: ImageNet.",
+    2018: "Большие языковые модели начинают развиваться.",
+    2023: "ChatGPT и другие современные LLM популяризируют ИИ.",
+    2025: "Ожидается рост мультимодальных моделей."
+};
+
+function showTimeline(){
+    const year = document.getElementById("year").value;
+    const output = document.getElementById("timeline-output");
+    output.innerText = timelineData[year] || "Данных на этот год нет.";
+}
 </script>
 
 </body>

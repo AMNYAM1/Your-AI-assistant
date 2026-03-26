@@ -47,7 +47,7 @@ button:hover {
     transform: scale(1.03);
 }
 
-/* РЕЗУЛЬТАТЫ */
+/* РЕЗУЛЬТАТЫ без анимации */
 .result-card {
     background: #f3f0ff;
     margin: 15px auto;
@@ -113,7 +113,7 @@ button:hover {
         <p><b>Большие языковые модели (LLM)</b> — обработка и генерация текста.</p>
     </div>
     <div class="section">
-        <img src="https://cdn-icons-png.flaticon.com/512/2910/2910768.png">
+        <img src="https://cdn-icons-png.flaticon.com/512/2721/2721293.png">
         <p><b>Диффузионные модели</b> — генерация изображений.</p>
     </div>
     <div class="section">
@@ -162,13 +162,13 @@ const questions = [
         {text: "Новичок", value: "beginner"},
         {text: "Продвинутый", value: "pro"}
     ]},
-    {q: "Нужен ли бесплатный доступ?", a:[
+    {q: "Важен ли бесплатный доступ?", a:[
         {text: "Да", value: "free"},
         {text: "Нет", value: "paid"}
     ]},
     {q: "Важна ли простота использования?", a:[
         {text: "Да, максимально просто", value: "easy"},
-        {text: "Не важно", value: "any"}
+        {text: "Не важна", value: "any"}
     ]}
 ];
 
@@ -212,7 +212,6 @@ function showResult() {
     const app = document.getElementById("app");
     let html = "<h2>Рекомендации:</h2>";
 
-    // Логика с учетом нескольких факторов
     if(answers.q0 === "text") {
         if(answers.q1 === "study") html += `<div class="result-card"><b>ChatGPT</b><br>Для учебных текстов и эссе</div>`;
         else html += `<div class="result-card"><b>Claude</b><br>Хорош для длинных текстов</div>`;

@@ -113,7 +113,7 @@ button:hover {
         <p><b>Большие языковые модели (LLM)</b> — обработка и генерация текста.</p>
     </div>
     <div class="section">
-        <img src="https://cdn-icons-png.flaticon.com/512/2721/2721293.png">
+        <img src="https://cdn-icons-png.flaticon.com/512/2910/2910768.png">
         <p><b>Диффузионные модели</b> — генерация изображений.</p>
     </div>
     <div class="section">

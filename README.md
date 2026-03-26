@@ -104,7 +104,7 @@ button:hover {
     <h1> Твой ИИ-ассистент</h1>
     <div id="content">
         <p>Хочешь узнать, какая нейросеть подходит именно тебе?</p>
-        <button onclick="startQuiz()">🚀 Пройти тест</button>
+        <button onclick="startQuiz()">Пройти тест</button>
     </div>
 </div>
 

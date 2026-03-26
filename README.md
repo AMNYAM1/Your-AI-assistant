@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -93,7 +92,6 @@ button:hover {
     <div id="answers"></div>
 </div>
 
-<КЛАССИФИКАЦИЯ>
 <div class="card fade">
     <h2> Классификация искусственного интеллекта</h2>
 
@@ -118,7 +116,6 @@ button:hover {
     </div>
 </div>
 
-<РАЗРАБОТЧИКИ>
 <div class="card fade">
     <h2> Кто создаёт нейросети?</h2>
 

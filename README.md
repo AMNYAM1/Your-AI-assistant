@@ -76,6 +76,12 @@ button:hover {
     width: 120px;
     border-radius: 12px;
 }
+.section img {
+    width: 120px;
+    border-radius: 12px;
+    background: #f3f0ff;
+    padding: 12px;
+}
 
 @media (max-width: 600px) {
     .section {

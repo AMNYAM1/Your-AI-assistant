@@ -1,7 +1,8 @@
+<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Подбор нейросети</title>
+<title>Your AI Assistant</title>
 
 <style>
 body {
@@ -23,6 +24,10 @@ body {
     border-radius: 20px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.08);
     margin-bottom: 30px;
+    text-align: center;
+}
+
+h1 {
     text-align: center;
 }
 
@@ -50,7 +55,6 @@ button:hover {
     border-radius: 12px;
 }
 
-/* Анимации */
 .fade {
     opacity: 0;
     transform: translateY(40px);
@@ -85,53 +89,52 @@ button:hover {
 
 <div class="container">
 
-<!-- QUIZ -->
 <div class="card fade show" id="app">
-    <h1> Подбор нейросети</h1>
+    <h1> Your AI Assistant</h1>
     <p id="question"></p>
     <div id="answers"></div>
 </div>
 
 <div class="card fade">
-    <h2> Классификация искусственного интеллекта</h2>
+    <h2> Классификация ИИ</h2>
 
     <div class="section">
         <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png">
-        <p><b>Текстовые ИИ</b> — пишут тексты, отвечают на вопросы, помогают учиться.</p>
+        <p><b>Большие языковые модели (LLM)</b> — обработка и генерация текста.</p>
     </div>
 
     <div class="section">
-        <img src="https://cdn-icons-png.flaticon.com/512/2910/2910768.png">
-        <p><b>Генераторы изображений</b> — создают картинки и дизайн.</p>
+        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f">
+        <p><b>Диффузионные модели</b> — генерация изображений.</p>
     </div>
 
     <div class="section">
         <img src="https://cdn-icons-png.flaticon.com/512/2721/2721293.png">
-        <p><b>Кодовые ассистенты</b> — помогают писать программы.</p>
+        <p><b>Кодовые модели</b> — генерация и анализ программного кода.</p>
     </div>
 
     <div class="section">
         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
-        <p><b>Презентационные ИИ</b> — делают слайды и оформление.</p>
+        <p><b>Мультимодальные модели</b> — работают с текстом, изображениями и др.</p>
     </div>
 </div>
 
 <div class="card fade">
-    <h2> Кто создаёт нейросети?</h2>
+    <h2> Разработчики ИИ</h2>
 
     <div class="section">
         <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg">
-        <p><b>OpenAI</b> — создатели ChatGPT и DALL·E</p>
+        <p><b>OpenAI</b> — ChatGPT, DALL·E</p>
     </div>
 
     <div class="section">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Microsoft_logo.svg">
-        <p><b>Microsoft</b> — развивает Copilot и AI-инструменты</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg">
+        <p><b>Microsoft</b> — Copilot, Azure AI</p>
     </div>
 
     <div class="section">
         <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Meta-Logo.png">
-        <p><b>Meta</b> — создаёт открытые модели ИИ</p>
+        <p><b>Meta</b> — открытые модели (LLaMA)</p>
     </div>
 
 </div>
@@ -143,14 +146,14 @@ const questions = [
     {
         q: "Что ты хочешь делать?",
         a: [
-            {text: "Писать тексты", value: "text"},
-            {text: "Создавать картинки", value: "image"},
-            {text: "Программировать", value: "code"},
-            {text: "Делать презентации", value: "slides"}
+            {text: "Тексты", value: "text"},
+            {text: "Картинки", value: "image"},
+            {text: "Код", value: "code"},
+            {text: "Презентации", value: "slides"}
         ]
     },
     {
-        q: "Для чего тебе это нужно?",
+        q: "Для чего?",
         a: [
             {text: "Учёба", value: "study"},
             {text: "Работа", value: "work"},
@@ -158,10 +161,24 @@ const questions = [
         ]
     },
     {
-        q: "Насколько ты опытен?",
+        q: "Твой уровень?",
         a: [
             {text: "Новичок", value: "beginner"},
             {text: "Продвинутый", value: "pro"}
+        ]
+    },
+    {
+        q: "Нужен ли бесплатный доступ?",
+        a: [
+            {text: "Да", value: "free"},
+            {text: "Нет", value: "paid"}
+        ]
+    },
+    {
+        q: "Важна ли простота использования?",
+        a: [
+            {text: "Да, максимально просто", value: "easy"},
+            {text: "Не важно", value: "any"}
         ]
     }
 ];
@@ -198,24 +215,24 @@ function next(value) {
 function showResult() {
     const app = document.getElementById("app");
 
-    let html = "<h2> Твои рекомендации:</h2>";
+    let html = "<h2>🎉 Рекомендации:</h2>";
 
     if (answers.q0 === "text") {
-        html += `<div class="result-card"><b>ChatGPT</b><br>Лучше всего для текстов и учёбы</div>`;
-        html += `<div class="result-card"><b>Jasper</b><br>Подходит для маркетинга</div>`;
+        html += `<div class="result-card"><b>ChatGPT</b><br>Универсальная LLM</div>`;
+        html += `<div class="result-card"><b>Claude</b><br>Хорош для длинных текстов</div>`;
     }
 
     if (answers.q0 === "image") {
-        html += `<div class="result-card"><b>Midjourney</b><br>Художественные изображения</div>`;
-        html += `<div class="result-card"><b>DALL·E</b><br>Генерация картинок</div>`;
+        html += `<div class="result-card"><b>Midjourney</b><br>Художественный стиль</div>`;
+        html += `<div class="result-card"><b>DALL·E</b><br>Генерация по описанию</div>`;
     }
 
     if (answers.q0 === "code") {
-        html += `<div class="result-card"><b>GitHub Copilot</b><br>Помогает писать код</div>`;
+        html += `<div class="result-card"><b>GitHub Copilot</b><br>Помощь в коде</div>`;
     }
 
     if (answers.q0 === "slides") {
-        html += `<div class="result-card"><b>Gamma</b><br>Создаёт презентации</div>`;
+        html += `<div class="result-card"><b>Gamma</b><br>Презентации</div>`;
     }
 
     app.innerHTML = html;
@@ -223,24 +240,18 @@ function showResult() {
 
 showQuestion();
 
-/* АНИМАЦИЯ ПРИ СКРОЛЛЕ */
+/* АНИМАЦИЯ */
 const faders = document.querySelectorAll('.fade');
 
-const appearOptions = {
-    threshold: 0.2
-};
-
-const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("show");
-        observer.unobserve(entry.target);
+        if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+        }
     });
-}, appearOptions);
-
-faders.forEach(fader => {
-    appearOnScroll.observe(fader);
 });
+
+faders.forEach(el => observer.observe(el));
 </script>
 
 </body>

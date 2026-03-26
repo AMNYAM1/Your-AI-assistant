@@ -74,7 +74,7 @@ button:hover {
 <body>
 
 <div class="container fade show" id="app">
-    <h1>🤖 Подбор нейросети</h1>
+    <h1> Подбор нейросети</h1>
     <p id="question"></p>
     <div id="answers"></div>
 </div>

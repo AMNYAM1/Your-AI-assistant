@@ -91,7 +91,7 @@ const questions = [
         ]
     },
     {
-        q: "Для чего тебе это нужно?",
+        q: "Для чего тебе нужен ИИ помощник?",
         a: [
             {text: "Учёба", value: "study"},
             {text: "Работа", value: "work"},
@@ -109,7 +109,7 @@ const questions = [
     {
         q: "Важно ли, чтобы сервис был бесплатным?",
         a: [
-            {text: "Да", value: "free"},
+            {text: "Важно", value: "free"},
             {text: "Не важно", value: "any"}
         ]
     }

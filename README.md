@@ -88,14 +88,14 @@ button:hover {
 
 <!-- QUIZ -->
 <div class="card fade show" id="app">
-    <h1>🤖 Подбор нейросети</h1>
+    <h1> Подбор нейросети</h1>
     <p id="question"></p>
     <div id="answers"></div>
 </div>
 
-<!-- КЛАССИФИКАЦИЯ -->
+<КЛАССИФИКАЦИЯ>
 <div class="card fade">
-    <h2>🧠 Классификация искусственного интеллекта</h2>
+    <h2> Классификация искусственного интеллекта</h2>
 
     <div class="section">
         <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png">
@@ -118,9 +118,9 @@ button:hover {
     </div>
 </div>
 
-<!-- РАЗРАБОТЧИКИ -->
+<РАЗРАБОТЧИКИ>
 <div class="card fade">
-    <h2>🏢 Кто создаёт нейросети?</h2>
+    <h2> Кто создаёт нейросети?</h2>
 
     <div class="section">
         <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg">
@@ -201,7 +201,7 @@ function next(value) {
 function showResult() {
     const app = document.getElementById("app");
 
-    let html = "<h2>🎉 Твои рекомендации:</h2>";
+    let html = "<h2> Твои рекомендации:</h2>";
 
     if (answers.q0 === "text") {
         html += `<div class="result-card"><b>ChatGPT</b><br>Лучше всего для текстов и учёбы</div>`;

@@ -74,7 +74,7 @@ button:hover {
     <h1>Твой ИИ-ассистент</h1>
     <div id="content">
         <p>Хочешь узнать, какая нейросеть подходит именно тебе?</p>
-        <button onclick="startQuiz()">Пройти тест</button>
+        <button onclick="startQuiz()">🚀 Пройти тест</button>
     </div>
 </div>
 </div>
@@ -94,7 +94,7 @@ const questions = [
         ]
     },
     {
-        q: "Для чего?",
+        q: "Для какой сферы?",
         a: [
             {text: "Учёба", value: "study"},
             {text: "Работа", value: "work"},
@@ -116,10 +116,10 @@ const questions = [
         ]
     },
     {
-        q: "Нужен ли бесплатный доступ?",
+        q: "Важен ли бесплатный доступ?",
         a: [
             {text: "Да", value: "free"},
-            {text: "Не важно", value: "any"}
+            {text: "Не важен", value: "any"}
         ]
     }
 ];
@@ -222,7 +222,7 @@ function showResult() {
 
     results.sort((a,b) => b.score - a.score);
 
-    app.innerHTML = "<h2>🎉 Результаты:</h2>";
+    app.innerHTML = "<h2>Результаты:</h2>";
 
     results.slice(0,2).forEach(r => {
         let percent = Math.min(100, r.score * 20);

@@ -1,7 +1,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Your AI Assistant</title>
+<title>Твой ИИ-ассистент</title>
 
 <style>
 body {

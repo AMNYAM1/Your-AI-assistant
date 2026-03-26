@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -101,7 +100,7 @@ button:hover {
 
 <div class="container">
 <div class="card fade show" id="app">
-    <h1> Твой ИИ-ассистент</h1>
+    <h1>Твой ИИ-ассистент</h1>
     <div id="content">
         <p>Хочешь узнать, какая нейросеть подходит именно тебе?</p>
         <button onclick="startQuiz()">Пройти тест</button>

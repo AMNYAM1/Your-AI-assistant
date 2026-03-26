@@ -103,7 +103,7 @@ button:hover {
     </div>
 
     <div class="section">
-        <img src="https://cdn-icons-png.flaticon.com/512/3595/3595455.png">
+        <img src="https://cdn-icons-png.flaticon.com/512/2910/2910768.png">
         <p><b>Диффузионные модели</b> — генерация изображений.</p>
     </div>
 

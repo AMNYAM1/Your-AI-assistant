@@ -47,31 +47,13 @@ button:hover {
     transform: scale(1.03);
 }
 
+/* РЕЗУЛЬТАТЫ без анимации */
 .result-card {
     background: #f3f0ff;
     margin: 15px auto;
     padding: 15px;
     border-radius: 12px;
     max-width: 90%;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.result-card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-    background: #e2ddff;
-}
-
-.fade {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: 0.8s ease;
-}
-
-.fade.show {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .section {
@@ -108,31 +90,13 @@ button:hover {
     background: #bbaeff;
     transition: width 0.5s ease;
 }
-
-/* Динамичный блок ИИ */
-#timeline {
-    text-align: center;
-    margin-top: 30px;
-}
-
-#timeline button, #timeline input[type=range] {
-    margin: 8px 5px;
-}
-
-#timeline-output {
-    margin-top: 15px;
-    padding: 12px;
-    background: #f0f4ff;
-    border-radius: 12px;
-    min-height: 50px;
-}
 </style>
 </head>
 <body>
 
 <div class="container">
 
-<div class="card fade show" id="app">
+<div class="card" id="app">
     <h1>Твой ИИ-ассистент</h1>
     <div class="progress-container">
         <div class="progress-bar" id="progress"></div>
@@ -142,7 +106,7 @@ button:hover {
 </div>
 
 <!-- КЛАССИФИКАЦИЯ -->
-<div class="card fade">
+<div class="card">
     <h2>Классификация ИИ</h2>
     <div class="section">
         <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png">
@@ -163,7 +127,7 @@ button:hover {
 </div>
 
 <!-- РАЗРАБОТЧИКИ -->
-<div class="card fade">
+<div class="card">
     <h2>Разработчики ИИ</h2>
     <div class="section">
         <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg">
@@ -176,17 +140,6 @@ button:hover {
     <div class="section">
         <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Meta-Logo.png">
         <p><b>Meta</b> — открытые модели (LLaMA)</p>
-    </div>
-</div>
-
-<!-- ДИНАМИЧНЫЙ БЛОК -->
-<div class="card fade">
-    <h2>Эволюция ИИ</h2>
-    <div id="timeline">
-        <label for="year">Выбери год:</label>
-        <input type="range" id="year" min="1950" max="2025" step="5" value="2000">
-        <div id="timeline-output">Информация появится здесь</div>
-        <button onclick="showTimeline()">Показать прогресс</button>
     </div>
 </div>
 
@@ -268,40 +221,12 @@ function showResult() {
     if(answers.q0 === "code") html += `<div class="result-card"><b>GitHub Copilot</b><br>Помощь в коде</div>`;
     if(answers.q0 === "slides") html += `<div class="result-card"><b>Gamma</b><br>Презентации</div>`;
 
-    // Бесплатные или платные
     if(answers.q3 === "free") html += `<div class="result-card"><b>Бесплатные версии</b><br>Подходят для пробного использования</div>`;
 
     app.innerHTML = html;
 }
 
-/* Анимация появления блоков */
-const faders = document.querySelectorAll('.fade');
-const observer = new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-        if(entry.isIntersecting) entry.target.classList.add("show");
-    });
-});
-faders.forEach(el=>observer.observe(el));
-
 showQuestion();
-
-/* ДИНАМИЧНЫЙ ТАЙМЛАЙН */
-const timelineData = {
-    1950: "Искусственный интеллект как концепция впервые предложен.",
-    1965: "Появились первые программы машинного обучения.",
-    1980: "Экспертные системы активно применяются в промышленности.",
-    1997: "Шахматный компьютер Deep Blue побеждает чемпиона мира.",
-    2012: "Революция глубокого обучения: ImageNet.",
-    2018: "Большие языковые модели начинают развиваться.",
-    2023: "ChatGPT и другие современные LLM популяризируют ИИ.",
-    2025: "Ожидается рост мультимодальных моделей."
-};
-
-function showTimeline(){
-    const year = document.getElementById("year").value;
-    const output = document.getElementById("timeline-output");
-    output.innerText = timelineData[year] || "Данных на этот год нет.";
-}
 </script>
 
 </body>
